@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gemini Chatbot</title>
+</head>
+<body>
+  <h1>Ask me anything</h1>
+  <div id="chat-box"></div>
+ <textarea id="user-input" placeholder="Type your message..." rows="4" cols="50" autofocus></textarea>
+ <button onclick="sendMessage()">Send</button>
+<script>
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value;
+      input.value = "";
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML += `<p><b>You:</b> ${message}</p>`;
+      const res = await fetch("", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
+    }
+  </script>
+</body>
+</html>
